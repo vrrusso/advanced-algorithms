@@ -1,2 +1,2 @@
-# advanced-algorithms
+# Advanced Algorithms
 Repository for Advanced Algorithms assignments
