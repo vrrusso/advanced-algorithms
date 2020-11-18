@@ -2,6 +2,8 @@
 
 #include<iostream>
 #include<vector>
+#include<set>
+
 
 
 using namespace std;
@@ -12,6 +14,12 @@ typedef struct {
     int h;
 }Doll;
 
+
+bool operator<(Doll a, Doll b){
+    if(a.w<b.w)
+        return true;
+    return false;
+}
 
 int main(){
 
@@ -34,24 +42,35 @@ int main(){
             dolls[j+1].w = aux.w;
             dolls[j+1].h = aux.h;
         }
-        //for(int i=0;i<m;i++){
-          //  printf("%d %d\n",dolls[i].w, dolls[i].h);
-        //}
-        //devo achar a maior sequência não incremental agora
-        int count = 1;
-        int aux_count=1;
-        for(int i=1;i<m;i++){
-            if(dolls[i].w <= dolls[i-1].w || dolls[i].h <= dolls[i-1].h)
-                aux_count++;
-            else{
-                if(aux_count>count)
-                    count = aux_count;
-                aux_count = 1;
+
+
+
+       /*vector<Doll> base;
+       for(Doll cur : dolls){
+            int i = base.size()-1;
+            while(i>=0 && (base[i].w >= cur.w || base[i].h >= cur.h))
+                i--;
+            if(i==-1){
+                base.push_back(cur);
             }
+            else{
+                base[i].w = cur.w;
+                base[i].h = cur.h;
+            }
+       }
+       printf("%d\n",(int)base.size());*/
+       
+
+       multiset<Doll> base;
+       for(Doll cur : dolls){
+           auto it = base.lower_bound(cur);
+           if(it != base.begin()) base.erase(--it);
+
+           base.insert(cur);
         }
-        if(aux_count>count)
-            count = aux_count;
-        printf("%d\n",count);
+        printf("%ld\n",base.size());
+    
+    
     }
 
 
